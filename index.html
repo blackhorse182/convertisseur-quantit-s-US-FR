@@ -1,43 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Recipe Ingredient Converter</title>
+    <title>Convertisseur d'Ingrédients de Recette</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="container">
-      <h1>Recipe Ingredient Converter</h1>
+      <h1>Convertisseur d'Ingrédients de Recette</h1>
       <form id="recipe-form">
         <div class="input-container">
-          <label for="ingredient">Ingredient:</label>
+          <label for="ingredient">Ingrédient :</label>
           <input type="text" id="ingredient" required />
         </div>
 
         <div class="input-container">
-          <label for="quantity">Quantity:</label>
+          <label for="quantity">Quantité :</label>
           <input type="number" id="quantity" step="any" required />
         </div>
 
         <div class="input-container">
-          <label for="unit">Unit:</label>
+          <label for="unit">Unité :</label>
           <select id="unit">
-            <option value="cup">Cup</option>
-            <option value="gram">Gram</option>
-            <option value="ounce">Ounce</option>
-            <option value="teaspoon">Teaspoon</option>
+            <option value="cup">Tasse</option>
+            <option value="gram">Gramme</option>
+            <option value="ounce">Once</option>
+            <option value="teaspoon">Cuillère à café</option>
           </select>
         </div>
         <div class="input-container">
-          <label for="servings">Number of Servings:</label>
+          <label for="servings">Nombre de Portions :</label>
           <input type="number" id="servings" step="any" value="1" />
         </div>
-        <button type="submit">Convert</button>
+        <button type="submit">Convertir</button>
       </form>
 
       <section>
-        <h2>Converted Ingredients</h2>
+        <h2>Ingrédients Convertis</h2>
         <ul id="result-list"></ul>
       </section>
     </main>
