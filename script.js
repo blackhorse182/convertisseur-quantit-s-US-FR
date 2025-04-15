@@ -21,30 +21,15 @@ const convertQuantity = (fromUnit) => (toUnit) => (quantity) => {
   return quantity * conversionRate; // Retourne la quantité convertie
 };
 
-// Exemple de conversion : 2 tasses en grammes
-const gramsResult = convertQuantity("cup")("gram")(2);
-console.log(gramsResult);
-
-// Fonction pour ajuster une quantité en fonction du nombre de portions
-const adjustForServings = (baseQuantity) => (newServings) =>
-  baseQuantity * newServings; // Ajuste la quantité pour les nouvelles portions
-
-// Exemple d'ajustement : 4 portions à 6 portions
-const servingsResult = adjustForServings(4)(6);
-console.log(servingsResult);
-
-// Fonction principale pour traiter un ingrédient
-const processIngredient = (baseQuantity, baseUnit, newUnit, newServings) => {
-  const adjustedQuantity = adjustForServings(baseQuantity)(newServings); // Ajuste la quantité pour les portions
-  const convertedQuantity = convertQuantity(baseUnit)(newUnit)(adjustedQuantity); // Convertit la quantité ajustée
+// Fonction principale pour traiter une conversion
+const processConversion = (baseQuantity, baseUnit, newUnit) => {
+  const convertedQuantity = convertQuantity(baseUnit)(newUnit)(baseQuantity); // Convertit la quantité
   return convertedQuantity ? convertedQuantity.toFixed(2) : "Conversion impossible"; // Retourne la quantité convertie ou un message d'erreur
 };
 
 // Sélection des éléments HTML nécessaires
-const ingredientName = document.getElementById("ingredient"); // Champ pour le nom de l'ingrédient
 const ingredientQuantity = document.getElementById("quantity"); // Champ pour la quantité
 const unitToConvert = document.getElementById("unit"); // Sélecteur pour l'unité
-const numberOfServings = document.getElementById("servings"); // Champ pour le nombre de portions
 const recipeForm = document.getElementById("recipe-form"); // Formulaire principal
 const resultList = document.getElementById("result-list"); // Liste pour afficher les résultats
 
@@ -58,15 +43,18 @@ const updateResultsList = () => {
   // Parcourt toutes les unités disponibles
   units.forEach((newUnit) => {
     if (newUnit !== unitToConvert.value) { // Ignore l'unité sélectionnée
-      const convertedQuantity = processIngredient(
+      const convertedQuantity = processConversion(
         parseFloat(ingredientQuantity.value), // Quantité saisie
         unitToConvert.value, // Unité d'origine
-        newUnit, // Nouvelle unité
-        parseFloat(numberOfServings.value) // Nombre de portions
+        newUnit // Nouvelle unité
       );
 
-      // Ajoute le résultat converti à la liste avec les unités en français
-      resultList.innerHTML += `<li>${ingredientName.value || "Ingrédient"}: ${convertedQuantity} ${unitTranslations[newUnit]}</li>`;
+      // Vérifie si la conversion est possible avant d'ajouter à la liste
+      if (convertedQuantity !== "Conversion impossible") {
+        resultList.innerHTML += `<li>${convertedQuantity} ${unitTranslations[newUnit]}</li>`;
+      } else {
+        resultList.innerHTML += `<li>Conversion impossible pour ${unitTranslations[newUnit]}</li>`;
+      }
     }
   });
 };
@@ -74,12 +62,8 @@ const updateResultsList = () => {
 // Ajout d'un gestionnaire d'événements pour le formulaire
 recipeForm.addEventListener("submit", (event) => {
   event.preventDefault(); // Empêche le rechargement de la page
-  if (
-    ingredientName.value.trim() === "" ||
-    isNaN(parseFloat(ingredientQuantity.value)) ||
-    isNaN(parseFloat(numberOfServings.value))
-  ) {
-    alert("Veuillez remplir tous les champs correctement."); // Alerte si des champs sont invalides
+  if (isNaN(parseFloat(ingredientQuantity.value))) {
+    alert("Veuillez entrer une quantité valide."); // Alerte si la quantité est invalide
     return;
   }
   updateResultsList(); // Met à jour la liste des résultats

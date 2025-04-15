@@ -5,16 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Convertisseur d'Ingrédients de Recette</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="scales.png" "type="image/png" />
+   
   </head>
   <body>
     <main class="container">
       <h1>Convertisseur d'Ingrédients de Recette</h1>
       <form id="recipe-form">
-        <div class="input-container">
-          <label for="ingredient">Ingrédient :</label>
-          <input type="text" id="ingredient" required />
-        </div>
-
+        
         <div class="input-container">
           <label for="quantity">Quantité :</label>
           <input type="number" id="quantity" step="any" required />
@@ -29,10 +27,7 @@
             <option value="teaspoon">Cuillère à café</option>
           </select>
         </div>
-        <div class="input-container">
-          <label for="servings">Nombre de Portions :</label>
-          <input type="number" id="servings" step="any" value="1" />
-        </div>
+        
         <button type="submit">Convertir</button>
       </form>
 
